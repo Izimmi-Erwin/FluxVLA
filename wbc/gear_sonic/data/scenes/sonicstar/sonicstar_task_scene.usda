@@ -1,0 +1,248 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+)
+
+over "World"
+{
+    def Xform "SonicStarTask"
+    {
+        def Scope "Materials"
+        {
+            def Material "table_mat"
+            {
+                color3f inputs:displayColor = (0.50, 0.34, 0.22)
+            }
+
+            def Material "cup_mat"
+            {
+                color3f inputs:displayColor = (0.88, 0.92, 0.96)
+            }
+
+            def Material "trash_bin_mat"
+            {
+                color3f inputs:displayColor = (0.18, 0.18, 0.20)
+            }
+        }
+
+        def Xform "table"
+        {
+            custom string mujoco:bodyName = "table"
+            custom string mujoco:sourceXml = "gear_sonic/data/robot_model/model_data/g1/scene_43dof.xml"
+            float3 xformOp:translate = (0.85, 0, 0.38)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            def Cube "table_top" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/table_mat>
+                custom string mujoco:geomName = "table_top"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.30, 0.45, 0.02)
+                custom double3 mujoco:friction = (1.2, 0.2, 0.05)
+                custom string mujoco:solref = "0.01 1"
+                custom string mujoco:solimp = "0.95 0.99 0.001"
+                float3 xformOp:translate = (0, 0, 0.36)
+                float3 xformOp:scale = (0.30, 0.45, 0.02)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+
+            def Cube "table_leg_fl" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/table_mat>
+                custom string mujoco:geomName = "table_leg_fl"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.03, 0.03, 0.36)
+                custom string mujoco:friction = "inherit default geom friction=1.0"
+                float3 xformOp:translate = (0.24, 0.38, 0)
+                float3 xformOp:scale = (0.03, 0.03, 0.36)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+
+            def Cube "table_leg_fr" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/table_mat>
+                custom string mujoco:geomName = "table_leg_fr"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.03, 0.03, 0.36)
+                custom string mujoco:friction = "inherit default geom friction=1.0"
+                float3 xformOp:translate = (0.24, -0.38, 0)
+                float3 xformOp:scale = (0.03, 0.03, 0.36)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+
+            def Cube "table_leg_rl" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/table_mat>
+                custom string mujoco:geomName = "table_leg_rl"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.03, 0.03, 0.36)
+                custom string mujoco:friction = "inherit default geom friction=1.0"
+                float3 xformOp:translate = (-0.24, 0.38, 0)
+                float3 xformOp:scale = (0.03, 0.03, 0.36)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+
+            def Cube "table_leg_rr" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/table_mat>
+                custom string mujoco:geomName = "table_leg_rr"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.03, 0.03, 0.36)
+                custom string mujoco:friction = "inherit default geom friction=1.0"
+                float3 xformOp:translate = (-0.24, -0.38, 0)
+                float3 xformOp:scale = (0.03, 0.03, 0.36)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        def Xform "cup" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+        )
+        {
+            bool physics:rigidBodyEnabled = 1
+            float physics:mass = 0.12
+            custom string mujoco:bodyName = "cup"
+            custom double3 mujoco:diaginertia = (0.00018, 0.00018, 0.00010)
+            custom string mujoco:freeJoint = "cup_freejoint"
+            custom double3 mujoco:inertialPos = (0, 0, 0)
+            custom string mujoco:sourceXml = "gear_sonic/data/robot_model/model_data/g1/scene_43dof.xml"
+            float3 xformOp:translate = (0.65, 0, 0.815)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            def Cylinder "cup_body" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double radius = 0.025
+                double height = 0.11
+                rel material:binding = </World/SonicStarTask/Materials/cup_mat>
+                custom string mujoco:geomName = "cup_body"
+                custom string mujoco:geomType = "cylinder"
+                custom double2 mujoco:geomSize = (0.025, 0.055)
+                custom double3 mujoco:friction = (1.5, 0.3, 0.08)
+                custom string mujoco:solref = "0.02 1"
+                custom string mujoco:solimp = "0.9 0.98 0.001"
+            }
+        }
+
+        def Xform "trash_bin"
+        {
+            custom string mujoco:bodyName = "trash_bin"
+            custom string mujoco:sourceXml = "gear_sonic/data/robot_model/model_data/g1/scene_43dof.xml"
+            float3 xformOp:translate = (0.25, -0.65, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            def Cube "trash_bin_bottom" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/trash_bin_mat>
+                custom string mujoco:geomName = "trash_bin_bottom"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.22, 0.22, 0.02)
+                custom double3 mujoco:friction = (1.0, 0.15, 0.03)
+                custom string mujoco:solref = "0.01 1"
+                custom string mujoco:solimp = "0.95 0.99 0.001"
+                float3 xformOp:translate = (0, 0, 0.02)
+                float3 xformOp:scale = (0.22, 0.22, 0.02)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+
+            def Cube "trash_bin_wall_front" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/trash_bin_mat>
+                custom string mujoco:geomName = "trash_bin_wall_front"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.22, 0.02, 0.28)
+                custom double3 mujoco:friction = (1.0, 0.15, 0.03)
+                custom string mujoco:solref = "0.01 1"
+                custom string mujoco:solimp = "0.95 0.99 0.001"
+                float3 xformOp:translate = (0, -0.21, 0.32)
+                float3 xformOp:scale = (0.22, 0.02, 0.28)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+
+            def Cube "trash_bin_wall_back" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/trash_bin_mat>
+                custom string mujoco:geomName = "trash_bin_wall_back"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.22, 0.02, 0.28)
+                custom double3 mujoco:friction = (1.0, 0.15, 0.03)
+                custom string mujoco:solref = "0.01 1"
+                custom string mujoco:solimp = "0.95 0.99 0.001"
+                float3 xformOp:translate = (0, 0.21, 0.32)
+                float3 xformOp:scale = (0.22, 0.02, 0.28)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+
+            def Cube "trash_bin_wall_left" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/trash_bin_mat>
+                custom string mujoco:geomName = "trash_bin_wall_left"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.02, 0.18, 0.28)
+                custom double3 mujoco:friction = (1.0, 0.15, 0.03)
+                custom string mujoco:solref = "0.01 1"
+                custom string mujoco:solimp = "0.95 0.99 0.001"
+                float3 xformOp:translate = (-0.21, 0, 0.32)
+                float3 xformOp:scale = (0.02, 0.18, 0.28)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+
+            def Cube "trash_bin_wall_right" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                double size = 2
+                rel material:binding = </World/SonicStarTask/Materials/trash_bin_mat>
+                custom string mujoco:geomName = "trash_bin_wall_right"
+                custom string mujoco:geomType = "box"
+                custom double3 mujoco:geomSize = (0.02, 0.18, 0.28)
+                custom double3 mujoco:friction = (1.0, 0.15, 0.03)
+                custom string mujoco:solref = "0.01 1"
+                custom string mujoco:solimp = "0.95 0.99 0.001"
+                float3 xformOp:translate = (0.21, 0, 0.32)
+                float3 xformOp:scale = (0.02, 0.18, 0.28)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+    }
+}
